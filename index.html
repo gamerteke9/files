@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>File Store</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#0b0b0b;
+  color:white;
+}
+.header{
+  padding:15px;
+  background:#111;
+  position:sticky;
+  top:0;
+}
+input{
+  width:100%;
+  padding:10px;
+  border-radius:8px;
+  border:none;
+}
+.card{
+  background:#1c1c1c;
+  margin:10px;
+  padding:12px;
+  border-radius:10px;
+}
+button{
+  padding:8px 15px;
+  border:none;
+  border-radius:6px;
+  background:#ff0000;
+  color:white;
+}
+</style>
+
+</head>
+<body>
+
+<div class="header">
+  <h2>📂 File Store</h2>
+  <input type="text" id="search" placeholder="Search files..." onkeyup="searchFile()">
+</div>
+
+<div id="list"></div>
+
+<script>
+let files=[
+ {name:"Sketchware Pro",type:"APK",link:"https://example.com/app.apk"},
+ {name:"No Copyright Music",type:"MP3",link:"https://example.com/music.mp3"},
+ {name:"HTML Template",type:"ZIP",link:"https://example.com/template.zip"},
+ {name:"Notes PDF",type:"PDF",link:"https://example.com/notes.pdf"}
+];
+
+function load(){
+ let list=document.getElementById("list");
+ list.innerHTML="";
+ files.forEach(f=>{
+  list.innerHTML+=`
+   <div class="card">
+    <h3>${f.name}</h3>
+    <p>Type: ${f.type}</p>
+    <button onclick="download('${f.link}')">Download</button>
+   </div>`;
+ });
+}
+
+function download(url){
+ window.location.href=url;
+}
+
+function searchFile(){
+ let q=document.getElementById("search").value.toLowerCase();
+ let list=document.getElementById("list");
+ list.innerHTML="";
+ files.filter(f=>f.name.toLowerCase().includes(q))
+ .forEach(f=>{
+  list.innerHTML+=`
+   <div class="card">
+    <h3>${f.name}</h3>
+    <p>Type: ${f.type}</p>
+    <button onclick="download('${f.link}')">Download</button>
+   </div>`;
+ });
+}
+
+load();
+</script>
+
+</body>
+</html>
